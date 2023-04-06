@@ -1,0 +1,27 @@
+<div class="min-h-[32px]">
+  <p
+    *ngIf="required && form.controls?.[name]?.errors?.['required'] && form.controls?.[name]?.touched"
+    class="text-red-500"
+  >
+    {{ name2 | titlecase }} gerekli 😥
+  </p>
+  <p
+    class="text-red-500"
+    *ngIf="form.controls?.[name]?.errors?.['maxlength'] && form.controls?.[name]?.touched"
+  >
+    {{ name2 | titlecase }}'nin maksimum uzunluğu {{ max }} karakterdir 🤨
+  </p>
+  <p
+    class="text-red-500"
+    *ngIf="form.controls?.[name]?.errors?.['email'] && form.controls?.[name]?.touched"
+  >
+    Email formatıyla uyuşmuyor 🤨
+  </p>
+  <p
+    class="text-red-500"
+    *ngIf="form.controls?.[name]?.errors?.['minlength'] && form.controls?.[name]?.touched"
+  >
+    {{ name2 | titlecase }}'nin minimum uzunluğu {{ min }} karakterdir 🤨
+  </p>
+</div>
+

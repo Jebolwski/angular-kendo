@@ -32,6 +32,8 @@ angular-kendo/node_modules
 
 angular-kendo/node_modules/
 
+angular-kendo/.angular
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/
