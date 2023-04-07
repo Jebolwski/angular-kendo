@@ -1,0 +1,8 @@
+<div class="flex items-center gap-2 dark:bg-stone-800 dark:text-white p-1">
+  <kendo-icon name="check" class="text-green-500 bg-green-200 h-6 w-6 rounded-full" *ngIf="todo.finished"></kendo-icon>
+  <kendo-icon name="exclamation-circle" class="text-orange-500 bg-orange-200 h-6 w-6 rounded-full"
+              *ngIf="!todo.finished"></kendo-icon>
+  <div>{{todo.title}}</div>
+  <div class="bg-green-400 text-white p-1 px-3 text-sm rounded-full" *ngIf="todo.finished">Bitirildi</div>
+  <div class="bg-orange-500 text-white p-1 px-3 text-sm rounded-full" *ngIf="!todo.finished">Yapılıyor</div>
+</div>

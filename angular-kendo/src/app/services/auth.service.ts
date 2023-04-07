@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import {Router} from "@angular/router";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {GoogleAuthProvider, User} from '@angular/fire/auth';
-import {getAuth, sendEmailVerification, sendPasswordResetEmail} from "firebase/auth";
+import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { GoogleAuthProvider, User } from '@angular/fire/auth';
+import {
+  getAuth,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+} from 'firebase/auth';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   constructor(
     private angularfireauth: AngularFireAuth,
-    private router: Router,
+    private router: Router
   ) {}
 
   darkMode: string | null = 'false';
@@ -19,13 +22,12 @@ export class AuthService {
     ? JSON.parse(localStorage.getItem('user')!)
     : null;
 
-
-
-
   async loginWithEmailPsw(data: {
     email: string;
     password: string;
   }): Promise<any> {
+    console.log(data);
+
     this.angularfireauth
       .signInWithEmailAndPassword(data.email, data.password)
       .then(async (resp) => {
@@ -34,10 +36,9 @@ export class AuthService {
         this.router.navigate(['/']);
         console.log(this.user);
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         this.user = undefined;
         localStorage.removeItem('user');
-        console.error(err, 'messi');
       });
   }
 
@@ -58,14 +59,14 @@ export class AuthService {
 
   toggleDarkMode(theme: string | null): void {
     this.darkMode = theme;
-    localStorage.setItem('theme', theme || 'dark');
+    localStorage.setItem('theme', theme || 'light');
   }
 
   signUp(data: { email: string; password: string; username: string }) {
     this.angularfireauth
       .createUserWithEmailAndPassword(data.email, data.password)
       .then(() => {
-        this.router.navigate(['/signin']);
+        this.router.navigate(['/sign-in']);
       })
       .catch((err) => {
         console.log(err);
@@ -89,10 +90,9 @@ export class AuthService {
   async verifyEmail(): Promise<void> {
     const auth = getAuth();
     if (auth.currentUser) {
-      await sendEmailVerification(auth.currentUser, null)
-        .then(() => {
-          console.log("geldi")
-        });
+      await sendEmailVerification(auth.currentUser, null).then(() => {
+        console.log('geldi');
+      });
     }
   }
 
@@ -101,7 +101,7 @@ export class AuthService {
     if (auth.currentUser && auth.currentUser.email) {
       await sendPasswordResetEmail(auth, auth.currentUser?.email)
         .then(() => {
-          console.log("sent reset psw mail")
+          console.log('sent reset psw mail');
         })
         .catch((error) => {
           const errorCode = error.code;

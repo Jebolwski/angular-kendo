@@ -1,26 +1,28 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
-import {environment} from '../environments/environments';
-import {getAuth, provideAuth} from '@angular/fire/auth';
-import {getFirestore, provideFirestore} from '@angular/fire/firestore';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environments';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonsComponent } from './components/buttons/buttons.component';
-import {AngularFireStorageModule} from '@angular/fire/compat/storage';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { SigninComponent } from './components/signin/signin.component';
 import { HeaderComponent } from './components/header/header.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorMessagesComponent } from './components/error-messages/error-messages.component';
-import {AngularFireModule} from "@angular/fire/compat";
-import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
-import {IconsModule} from "@progress/kendo-angular-icons";
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { HomeComponent } from './components/home/home.component';
-
-
+import { IconsModule } from '@progress/kendo-angular-icons';
+import { LabelModule } from '@progress/kendo-angular-label';
+import { InputsModule } from '@progress/kendo-angular-inputs';
+import { ToDoComponent } from './components/to-do/to-do.component';
+import { TodosComponent } from './components/todos/todos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,8 @@ import { HomeComponent } from './components/home/home.component';
     ErrorMessagesComponent,
     SignUpComponent,
     HomeComponent,
+    ToDoComponent,
+    TodosComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,8 +48,10 @@ import { HomeComponent } from './components/home/home.component';
     AngularFireStorageModule,
     ReactiveFormsModule,
     IconsModule,
+    LabelModule,
+    InputsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

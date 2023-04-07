@@ -1,6 +1,6 @@
 <div class="login-div dark:bg-stone-800 p-4 text-black dark:text-white">
   <form
-    class="w-full mt-5 shadow-md rounded-lg p-4"
+    class="w-full mt-5 shadow-lg rounded-lg p-4"
     [formGroup]="loginForm"
     (submit)="
       password?.errors || email?.errors
@@ -8,7 +8,7 @@
         : service.loginWithEmailPsw(loginForm.value)
     "
   >
-    <h1 class="lg:text-xl text-[#721a29]  text-lg text-center font-medium">
+    <h1 class="lg:text-xl text-[#721a29] text-lg text-center font-medium">
       Giriş Yap
     </h1>
     <div class="flex justify-center">
@@ -19,18 +19,26 @@
             <kendo-icon name="email" size="large"></kendo-icon>
             <p>Email</p>
           </div>
-          <input
-            type="text"
-            formControlName="email"
-            [ngClass]="email?.errors && email?.touched ? 'border-red-500' : ''"
-            class="bg-gradient-to-br from-gray-200 to-gray-300 dark:from-stone-700 dark:to-stone-800 text-red-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
-          />
+          <div class="flex items-center gap-2">
+            <input
+              type="text"
+              formControlName="email"
+              [ngClass]="
+                email?.errors && email?.touched ? 'border-red-500' : ''
+              "
+              class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-red-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+            />
+            <span
+              class="k-icon k-i-check text-green-500 text-lg"
+              *ngIf="!email?.errors && email?.touched"
+            ></span>
+          </div>
         </div>
         <app-error-messages
           name="email"
           name2="email"
           [max]="40"
-          [min]="5"
+          [min]="6"
           [form]="loginForm"
           [email]="true"
           [required]="true"
@@ -41,14 +49,20 @@
             <kendo-icon name="lock" size="large"></kendo-icon>
             <p>Şifre</p>
           </div>
-          <input
-            type="password"
-            [ngClass]="
-              password?.errors && password?.touched ? 'border-red-500' : ''
-            "
-            class="bg-gradient-to-br from-gray-200 to-gray-300 dark:from-stone-700 dark:to-stone-800 text-red-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
-            formControlName="password"
-          />
+          <div class="flex items-center gap-2">
+            <input
+              type="password"
+              [ngClass]="
+                password?.errors && password?.touched ? 'border-red-500' : ''
+              "
+              class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-red-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+              formControlName="password"
+            />
+            <span
+              class="k-icon k-i-check text-green-500 text-lg"
+              *ngIf="!password?.errors && password?.touched"
+            ></span>
+          </div>
         </div>
         <app-error-messages
           name="password"
@@ -60,50 +74,49 @@
           [required]="true"
         ></app-error-messages>
         <!-- Login -->
-        <div class="flex justify-center mt-4">
-          <kendo-button
-            class="w-1/2"
+        <div class="flex justify-center items-center mt-4">
+          <button
+            kendoButton
+            class="lg:w-1/2 w-4/5"
+            [icon]="'unlock'"
             [ngClass]="password?.errors || email?.errors ? 'opacity-50' : ''"
           >
             Giriş Yap
-          </kendo-button>
-        </div>
-        <!-- OR -->
-        <div class="flex justify-center">
-          <div
-            class="w-full lg:w-1/2 h-[2px] bg-gray-200 dark:bg-stone-700 rounded-md mt-5 relative"
-          >
-            <div
-              class="px-1 h-8 border-2 bottom-0 bg-gray-200 dark:bg-stone-700 translate-y-1/2 absolute right-1/2 translate-x-1/2 border-gray-300 dark:border-stone-700 grid place-items-center rounded-lg"
-            >
-              YADA
-            </div>
-          </div>
-        </div>
-        <!-- Google and Github -->
-        <div class="flex justify-center mt-6 gap-4">
-          <!-- Google -->
-          <button
-            (click)="service.loginWithGmail()"
-            class="border-2 rounded-full border-gray-300 p-1"
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
-              class="w-7 google-icon"
-              alt="Google"
-            />
           </button>
-          <!-- Github -->
-
         </div>
-        <!-- Dont have an account? -->
-        <div class="text-center font-light mt-4 flex items-center justify-center gap-3">
-          <div>
-            Zaten hesabın var mı?
+        <!-- Ya da -->
+        <div class="grid place-items-center my-3">
+          <div class="lg:w-1/2 flex items-center w-4/5">
+            <div class="bg-gray-200 h-[2px] w-full rounded-md"></div>
+            <p class="w-28 text-center font-semibold">ya da</p>
+            <div class="bg-gray-200 h-[2px] w-full rounded-md"></div>
           </div>
-          <kendo-button class="pt-[0.6rem] px-1 h-6" routerLink="/sign-up">
-            Kayıt Ol
+        </div>
+        <!-- Google -->
+        <div class="flex justify-center">
+          <kendo-button
+            (click)="service.loginWithGmail()"
+            class="rounded-md p-1 w-4/5 lg:w-1/2"
+          >
+            <div class="flex gap-2 items-center">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"
+                class="w-6 google-icon"
+                alt="Google"
+              />
+              <p>Google ile giriş yap</p>
+            </div>
           </kendo-button>
+        </div>
+
+        <!-- Dont have an account? -->
+        <div
+          class="text-center font-light mt-4 flex items-center justify-center gap-3"
+        >
+          <div>Zaten hesabın var mı?</div>
+          <kendo-button routerLink="/sign-up" class="pt-[0.6rem] px-1 h-6"
+            >Kayıt Ol</kendo-button
+          >
         </div>
       </div>
     </div>

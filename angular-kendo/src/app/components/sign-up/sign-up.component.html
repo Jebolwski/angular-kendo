@@ -1,1 +1,147 @@
-<p>sign-up works!</p>
+<div class="login-div dark:bg-stone-800 p-4 pb-2 text-black dark:text-white">
+  <div class="w-full mt-5 shadow-lg flex justify-center rounded-lg p-4">
+    <form
+      class="w-full lg:w-3/4"
+      [formGroup]="signUpForm"
+      (submit)="
+        password?.errors || confirm?.errors || email?.errors
+          ? null
+          : service.signUp(signUpForm.value)
+      "
+    >
+      <h1 class="lg:text-xl text-[#721a29] text-lg text-center font-medium">
+        Kayıt Ol
+      </h1>
+      <!-- Email -->
+      <div>
+        <div class="flex items-center">
+          <kendo-icon name="email" size="large"></kendo-icon>
+          <p>Email</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="text"
+            formControlName="email"
+            [ngClass]="email?.errors && email?.touched ? 'border-red-500' : ''"
+            class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-orange-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+          />
+          <span
+            class="k-icon k-i-check text-green-500 text-lg"
+            *ngIf="!email?.errors && email?.touched"
+          ></span>
+        </div>
+      </div>
+      <app-error-messages
+        name="email"
+        name2="email"
+        [max]="40"
+        [min]="5"
+        [form]="signUpForm"
+        [email]="true"
+        [required]="true"
+      ></app-error-messages>
+      <!-- Password -->
+      <div>
+        <div class="flex items-center mt-4">
+          <kendo-icon name="lock" size="large"></kendo-icon>
+          <p>Şifre</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="password"
+            [ngClass]="
+              (password?.errors && password?.touched) ||
+              (password?.touched && confirm?.touched && !same)
+                ? 'border-red-500'
+                : ''
+            "
+            class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-orange-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+            formControlName="password"
+          />
+          <span
+            class="k-icon k-i-check text-green-500 text-lg"
+            *ngIf="
+              !password?.errors && password?.touched && confirm?.touched && same
+            "
+          ></span>
+        </div>
+      </div>
+      <app-error-messages
+        name="password"
+        name2="Şifre"
+        [max]="40"
+        [min]="6"
+        [form]="signUpForm"
+        [email]="false"
+        [required]="true"
+      ></app-error-messages>
+
+      <!-- Password (Again) -->
+      <div>
+        <div class="flex items-center mt-4">
+          <kendo-icon name="lock" size="large"></kendo-icon>
+          <p>Şifre (Yeniden)</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <input
+            type="password"
+            [ngClass]="
+              (confirm?.errors && confirm?.touched) ||
+              (password?.touched && confirm?.touched && !same)
+                ? 'border-red-500'
+                : ''
+            "
+            class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-orange-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+            formControlName="confirm"
+          />
+          <span
+            class="k-icon k-i-check text-green-500 text-lg"
+            *ngIf="
+              !confirm?.errors && confirm?.touched && password?.touched && same
+            "
+          ></span>
+        </div>
+      </div>
+      <p
+        class="text-red-500"
+        *ngIf="password?.touched && confirm?.touched && !same"
+      >
+        Şifreler uyuşmuyor. 🫥
+      </p>
+      <app-error-messages
+        name="confirm"
+        name2="Şifre (Yeniden)"
+        [max]="40"
+        [min]="6"
+        [form]="signUpForm"
+        [email]="false"
+        [required]="true"
+      ></app-error-messages>
+
+      <!-- Signup -->
+      <div class="flex justify-center mt-4">
+        <button
+          kendoButton
+          class="lg:w-1/2 w-4/5"
+          icon="unlock"
+          [ngClass]="
+            password?.errors || confirm?.errors || email?.errors
+              ? 'opacity-50'
+              : ''
+          "
+        >
+          Kayıt Ol
+        </button>
+      </div>
+      <!-- Already have an account? -->
+      <div
+        class="text-center font-light mt-4 flex items-center justify-center gap-3"
+      >
+        <div>Zaten hesabın var mı?</div>
+        <kendo-button routerLink="/sign-in" class="pt-[0.6rem] px-1 h-6"
+          >Giriş Yap</kendo-button
+        >
+      </div>
+    </form>
+  </div>
+</div>

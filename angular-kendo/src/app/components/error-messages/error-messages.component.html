@@ -15,13 +15,12 @@
     class="text-red-500"
     *ngIf="form.controls?.[name]?.errors?.['email'] && form.controls?.[name]?.touched"
   >
-    Email formatıyla uyuşmuyor 🤨
+    Email formatıyla uyuşmuyor 😢
   </p>
   <p
     class="text-red-500"
     *ngIf="form.controls?.[name]?.errors?.['minlength'] && form.controls?.[name]?.touched"
   >
-    {{ name2 | titlecase }}'nin minimum uzunluğu {{ min }} karakterdir 🤨
+    {{ name2 | titlecase }}'nin minimum uzunluğu {{ min }} karakterdir 😒
   </p>
 </div>
-

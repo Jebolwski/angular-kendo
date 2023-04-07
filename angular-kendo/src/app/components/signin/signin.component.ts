@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import {AuthService} from "../../services/auth.service";
+import { AuthService } from '../../services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss']
+  styleUrls: ['./signin.component.scss'],
 })
 export class SigninComponent {
-
   constructor(public service: AuthService) {}
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [
       Validators.required,
+      Validators.email,
       Validators.minLength(5),
       Validators.maxLength(40),
     ]),

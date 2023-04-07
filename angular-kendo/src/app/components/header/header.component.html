@@ -1,11 +1,31 @@
-<div class="text-white flex justify-between bg-[#721a29] p-2">
-  <a routerLink="/">
-    header
-  </a>
-  <a (click)="auth.signOut()">
-    Sign Out
-  </a>
-  <a routerLink="/sign-in">
-    Sign in
-  </a>
+<div
+  class="text-white flex items-center justify-between dark:bg-[#610918] bg-[#721a29] p-2"
+>
+  <kendo-icon
+    name="brightness-contrast"
+    size="large"
+    class="cursor-pointer"
+    (click)="
+      auth.darkMode == 'light'
+        ? auth.toggleDarkMode('dark')
+        : auth.toggleDarkMode('light')
+    "
+  ></kendo-icon>
+  <a routerLink="/"> header </a>
+  <div (click)="auth.signOut()" *ngIf="auth.user"
+       class="flex items-center gap-1 bg-[#610918] dark:bg-[#721a29] hover:shadow-lg hover:rounded-xl dark:hover:bg-red-900 hover:bg-[#832b3a] duration-500 rounded-br-lg rounded-tl-lg p-1 cursor-pointer">
+    <kendo-icon name="logout"></kendo-icon>
+    <span>
+    Çıkış Yap
+    </span>
+  </div>
+  <button
+    class="flex items-center gap-1 bg-[#610918] dark:bg-[#721a29] hover:shadow-lg hover:rounded-xl dark:hover:bg-red-900 hover:bg-[#832b3a] duration-500 rounded-br-lg rounded-tl-lg p-1"
+    routerLink="/sign-in" *ngIf="!auth.user">
+    <kendo-icon name="login"></kendo-icon>
+    <span>
+    Giriş Yap
+    </span>
+  </button>
+
 </div>

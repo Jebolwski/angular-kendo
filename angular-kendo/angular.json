@@ -31,7 +31,7 @@
             ],
             "styles": [
               {
-                "input": "node_modules/@progress/kendo-theme-material/dist/all.css"
+                "input": "node_modules/@progress/kendo-theme-material/dist/all.scss"
               },
               "src/styles.scss"
             ],
@@ -97,7 +97,7 @@
             ],
             "styles": [
               {
-                "input": "node_modules/@progress/kendo-theme-material/dist/all.css"
+                "input": "node_modules/@progress/kendo-theme-material/dist/all.scss"
               },
               "src/styles.scss"
             ],
