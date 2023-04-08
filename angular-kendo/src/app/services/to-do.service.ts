@@ -4,16 +4,13 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDoc,
   onSnapshot,
   query,
   Unsubscribe,
-  updateDoc,
   where,
 } from 'firebase/firestore';
 import {ToDo} from "../interfaces/to-do";
 import {AuthService} from "./auth.service";
-import slugify from "slugify";
 import {Router} from "@angular/router";
 
 @Injectable({
@@ -53,7 +50,7 @@ export class ToDoService {
     );
   }
 
-  async addTodo(data: ToDo, event: any) {
+  async addTodo(data: ToDo) {
 
     let productRef = collection(this.firestore, 'todos');
 
@@ -84,13 +81,16 @@ export class ToDoService {
   }
 
   async allTodos(): Promise<Unsubscribe> {
-    let user_q = query(collection(this.firestore, 'todos'));
-    return onSnapshot(user_q, (snapshot: any) => {
+    let todoRef = query(collection(this.firestore, 'todos'));
+    const q = query(todoRef, where("uid", "==", this.auth.user?.uid));
+
+    return onSnapshot(q, (snapshot: any) => {
       this.todos = snapshot.docs.map(
         (data: { data(): ToDo; id: string }) => {
           return {...data.data(), id: data.id};
         }
       );
     });
+
   }
 }

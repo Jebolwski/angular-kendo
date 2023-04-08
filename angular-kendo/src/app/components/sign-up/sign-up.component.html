@@ -1,5 +1,5 @@
 <div class="login-div dark:bg-stone-800 p-4 pb-2 text-black dark:text-white">
-  <div class="w-full mt-5 shadow-lg flex justify-center rounded-lg p-4">
+  <div class="w-full mt-10 shadow-lg flex justify-center rounded-lg p-4">
     <form
       class="w-full lg:w-3/4"
       [formGroup]="signUpForm"
@@ -9,12 +9,10 @@
           : service.signUp(signUpForm.value)
       "
     >
-      <h1 class="lg:text-xl text-[#721a29] text-lg text-center font-medium">
-        Kayıt Ol
-      </h1>
+
       <!-- Email -->
       <div>
-        <div class="flex items-center">
+        <div class="flex items-center gap-1">
           <kendo-icon name="email" size="large"></kendo-icon>
           <p>Email</p>
         </div>
@@ -42,7 +40,7 @@
       ></app-error-messages>
       <!-- Password -->
       <div>
-        <div class="flex items-center mt-4">
+        <div class="flex items-center gap-1 mt-4">
           <kendo-icon name="lock" size="large"></kendo-icon>
           <p>Şifre</p>
         </div>
@@ -78,7 +76,7 @@
 
       <!-- Password (Again) -->
       <div>
-        <div class="flex items-center mt-4">
+        <div class="flex items-center gap-1 mt-4">
           <kendo-icon name="lock" size="large"></kendo-icon>
           <p>Şifre (Yeniden)</p>
         </div>
@@ -139,7 +137,8 @@
       >
         <div>Zaten hesabın var mı?</div>
         <kendo-button routerLink="/sign-in" class="pt-[0.6rem] px-1 h-6"
-          >Giriş Yap</kendo-button
+        >Giriş Yap
+        </kendo-button
         >
       </div>
     </form>

@@ -1,3 +1,5 @@
-<div *ngFor="let todo of todoservice.todos">
-  <app-to-do [todo]="todo"></app-to-do>
+<div class="dark:bg-stone-900 min-h-[350px]">
+  <div *ngFor="let todo of todoservice.todos">
+    <app-to-do [todo]="todo"></app-to-do>
+  </div>
 </div>
