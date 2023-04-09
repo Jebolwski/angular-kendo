@@ -1,0 +1,25 @@
+.vertical-div {
+  max-width: 300px;
+}
+
+.dots, .image, .state {
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.icons {
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.vertical-div:hover {
+  .dots, .image, .state {
+    opacity: 1;
+  }
+
+  .icons {
+    opacity: 0;
+  }
+
+  transition: 0.5s;
+}

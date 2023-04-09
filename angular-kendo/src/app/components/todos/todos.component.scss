@@ -1,0 +1,31 @@
+.page {
+  min-height: calc(100vh - 48px);
+}
+
+.horizontal {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.vertical {
+  padding-top: 20px;
+  padding-left: 14vw;
+  padding-right: 14vw;
+}
+
+.vertical .todo {
+  padding: 10px;
+}
+
+.vertical > .todo > div {
+  opacity: 0.3;
+}
+
+@media only screen and (max-width: 768px) {
+  .vertical {
+    padding-top: 20px;
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+}

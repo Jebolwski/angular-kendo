@@ -51,18 +51,17 @@ export class ToDoService {
   }
 
   async addTodo(data: ToDo) {
-
+    console.log(data);
     let productRef = collection(this.firestore, 'todos');
 
     if (this.auth.user?.uid) {
       data['uid'] = this.auth.user?.uid;
     }
 
-    console.log(data);
+    data['finished'] = false;
 
     await addDoc(productRef, data)
       .then(() => {
-        this.router.navigate(['/']);
       })
       .catch((err: Error) => {
         console.log(err);

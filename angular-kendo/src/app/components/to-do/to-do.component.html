@@ -1,8 +1,27 @@
-<div class="flex items-center gap-4 dark:bg-stone-900 dark:text-white p-1">
-  <kendo-icon name="check" class="text-green-500 bg-green-200 h-6 w-6 rounded-full" *ngIf="todo.finished"></kendo-icon>
-  <kendo-icon name="exclamation-circle" class="text-orange-500 bg-orange-200 h-6 w-6 rounded-full"
-              *ngIf="!todo.finished"></kendo-icon>
-  <div>{{todo.title}}</div>
-  <div class="bg-green-400 text-white p-1 px-3 text-sm rounded-full" *ngIf="todo.finished">Bitirildi</div>
-  <div class="bg-orange-500 text-white p-1 px-3 text-sm rounded-full" *ngIf="!todo.finished">Yapılıyor</div>
+<div
+  class="vertical-div cursor-pointer dark:bg-stone-800 dark:text-white p-3 rounded-lg shadow-lg">
+  <div *ngIf="todo.title">{{todo.title}}</div>
+  <p *ngIf="todo.description.length>100">{{todo.description | slice:0:100}}...</p>
+  <p *ngIf="todo.description.length<=100">{{todo.description}}</p>
+
+  <div class="flex items-center justify-between gap-5 mt-3 relative">
+    <i
+      class="fa-solid fa-check text-green-400 bg-green-200 w-6 h-6 grid place-items-center rounded-full icons absolute right-0"
+      *ngIf="todo.finished==true"></i>
+    <i
+      class="fa-solid fa-triangle-exclamation text-orange-400 bg-orange-200 w-6 h-6 grid place-items-center rounded-full icons absolute right-0"
+      *ngIf="todo.finished==false"></i>
+    <i class="fa-regular fa-image image"></i>
+
+    <div class="bg-green-400 text-white text-center p-[2px] px-3 text-sm rounded-full w-20 state"
+         *ngIf="todo.finished==true">
+      Bitirildi
+    </div>
+    <div class="bg-orange-500 text-white p-[2px] text-center px-3 text-sm rounded-full  w-20 state"
+         *ngIf="todo.finished==false">
+      Yapılıyor
+    </div>
+    <i
+      class="fa-solid fa-ellipsis dots rotate-90 hover:bg-stone-200 dark:hover:bg-stone-500 duration-300 w-6 h-6 grid place-items-center rounded-full"></i>
+  </div>
 </div>
