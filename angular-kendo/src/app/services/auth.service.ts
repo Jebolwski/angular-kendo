@@ -7,6 +7,7 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
 } from 'firebase/auth';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,15 +27,12 @@ export class AuthService {
     email: string;
     password: string;
   }): Promise<any> {
-    console.log(data);
-
     this.angularfireauth
       .signInWithEmailAndPassword(data.email, data.password)
       .then(async (resp) => {
         localStorage.setItem('user', JSON.stringify(resp.user));
         this.user = JSON.parse(localStorage.getItem('user')!);
         this.router.navigate(['/']);
-        console.log(this.user);
       })
       .catch((err: Error) => {
         this.user = undefined;
@@ -47,7 +45,6 @@ export class AuthService {
       .signInWithPopup(new GoogleAuthProvider())
       .then((resp) => {
         console.log(resp.user?.email);
-        // console.log(resp.user._delegate);
         localStorage.setItem('user', JSON.stringify(resp.user));
         this.user = JSON.parse(localStorage.getItem('user')!);
         this.router.navigate(['/']);
@@ -79,7 +76,7 @@ export class AuthService {
       .then(() => {
         localStorage.removeItem('user');
         localStorage.removeItem('authTokens');
-        this.user = undefined!;
+        this.user = undefined;
         this.router.navigate(['/']);
       })
       .catch((err) => {

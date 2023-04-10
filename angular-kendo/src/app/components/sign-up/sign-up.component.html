@@ -1,4 +1,4 @@
-<div class="login-div dark:bg-stone-800 p-4 pb-2 text-black dark:text-white">
+<div class="height-div dark:bg-stone-800 p-4 pb-2 text-black dark:text-white">
   <div class="w-full mt-10 shadow-lg flex justify-center rounded-lg p-4">
     <form
       class="w-full lg:w-3/4"
@@ -9,7 +9,6 @@
           : service.signUp(signUpForm.value)
       "
     >
-
       <!-- Email -->
       <div>
         <div class="flex items-center gap-1">
@@ -21,7 +20,7 @@
             type="text"
             formControlName="email"
             [ngClass]="email?.errors && email?.touched ? 'border-red-500' : ''"
-            class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-orange-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+            class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-stone-900 rounded-md w-full p-1 outline-none border dark:border-stone-700"
           />
           <span
             class="k-icon k-i-check text-green-500 text-lg"
@@ -53,7 +52,7 @@
                 ? 'border-red-500'
                 : ''
             "
-            class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-orange-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+            class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-stone-900 rounded-md w-full p-1 outline-none border dark:border-stone-700"
             formControlName="password"
           />
           <span
@@ -89,7 +88,7 @@
                 ? 'border-red-500'
                 : ''
             "
-            class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-orange-500 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+            class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-stone-900 rounded-md w-full p-1 outline-none border dark:border-stone-700"
             formControlName="confirm"
           />
           <span
@@ -137,9 +136,8 @@
       >
         <div>Zaten hesabın var mı?</div>
         <kendo-button routerLink="/sign-in" class="pt-[0.6rem] px-1 h-6"
-        >Giriş Yap
-        </kendo-button
-        >
+          >Giriş Yap
+        </kendo-button>
       </div>
     </form>
   </div>

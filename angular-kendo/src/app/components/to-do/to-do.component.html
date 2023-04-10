@@ -1,27 +1,42 @@
 <div
-  class="vertical-div cursor-pointer dark:bg-stone-800 dark:text-white p-3 rounded-lg shadow-lg">
-  <div *ngIf="todo.title">{{todo.title}}</div>
-  <p *ngIf="todo.description.length>100">{{todo.description | slice:0:100}}...</p>
-  <p *ngIf="todo.description.length<=100">{{todo.description}}</p>
+  class="vertical-div relative cursor-pointer bg-stone-100 dark:bg-stone-800 dark:text-white p-3 rounded-lg shadow-lg"
+>
+  <div class="absolute pin -right-1 -top-1">
+    <i class="fa-regular fa-star"></i>
+  </div>
+  <div *ngIf="todo.title">{{ todo.title }}</div>
+  <p *ngIf="todo.description.length > 100">
+    {{ todo.description | slice : 0 : 100 }}...
+  </p>
+  <p *ngIf="todo.description.length <= 100">{{ todo.description }}</p>
 
   <div class="flex items-center justify-between gap-5 mt-3 relative">
     <i
       class="fa-solid fa-check text-green-400 bg-green-200 w-6 h-6 grid place-items-center rounded-full icons absolute right-0"
-      *ngIf="todo.finished==true"></i>
+      *ngIf="todo.finished == true"
+    ></i>
     <i
       class="fa-solid fa-triangle-exclamation text-orange-400 bg-orange-200 w-6 h-6 grid place-items-center rounded-full icons absolute right-0"
-      *ngIf="todo.finished==false"></i>
+      *ngIf="todo.finished == false"
+    ></i>
     <i class="fa-regular fa-image image"></i>
 
-    <div class="bg-green-400 text-white text-center p-[2px] px-3 text-sm rounded-full w-20 state"
-         *ngIf="todo.finished==true">
+    <div
+      class="bg-green-400 text-white text-center p-[2px] px-3 text-sm rounded-full w-20 state"
+      *ngIf="todo.finished == true"
+      (click)="todoservice.toggleTodoState(todo.id)"
+    >
       Bitirildi
     </div>
-    <div class="bg-orange-500 text-white p-[2px] text-center px-3 text-sm rounded-full  w-20 state"
-         *ngIf="todo.finished==false">
+    <div
+      class="bg-orange-500 text-white p-[2px] text-center px-3 text-sm rounded-full w-20 state"
+      *ngIf="todo.finished == false"
+      (click)="todoservice.toggleTodoState(todo.id)"
+    >
       Yapılıyor
     </div>
     <i
-      class="fa-solid fa-ellipsis dots rotate-90 hover:bg-stone-200 dark:hover:bg-stone-500 duration-300 w-6 h-6 grid place-items-center rounded-full"></i>
+      class="fa-solid fa-ellipsis dots rotate-90 hover:bg-stone-200 dark:hover:bg-stone-500 duration-300 w-6 h-6 grid place-items-center rounded-full"
+    ></i>
   </div>
 </div>

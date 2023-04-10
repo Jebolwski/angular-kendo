@@ -2,7 +2,7 @@
   max-width: 300px;
 }
 
-.dots, .image, .state {
+.dots, .image, .state, .pin {
   opacity: 0;
   transition: 0.5s;
 }
@@ -13,7 +13,7 @@
 }
 
 .vertical-div:hover {
-  .dots, .image, .state {
+  .dots, .image, .state, .pin {
     opacity: 1;
   }
 

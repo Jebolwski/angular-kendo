@@ -1,0 +1,18 @@
+<div class="dark:bg-stone-900 sticky height-div-1 dark:text-white pt-8">
+  <div
+    routerLink="/"
+    class="flex items-center text-lg gorevler dark:hover:bg-stone-800 hover:bg-stone-200 duration-200 cursor-pointer p-2 rounded-r-full"
+    (click)="activate('.gorevler')"
+  >
+    <i class="fa-regular fa-lightbulb w-7"></i>
+    <span class="lg:block hidden">Yapılacaklar</span>
+  </div>
+  <div
+    routerLink="/favorites"
+    class="flex items-center favori mt-8 text-lg dark:hover:bg-stone-800 hover:bg-stone-200 duration-200 cursor-pointer p-2 rounded-r-full"
+    (click)="activate('.favori')"
+  >
+    <i class="fa-regular fa-star w-7"></i>
+    <span class="lg:block hidden">Favorilerin</span>
+  </div>
+</div>

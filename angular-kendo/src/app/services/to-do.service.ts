@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {addDoc, Firestore} from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
+import { addDoc, Firestore, updateDoc } from '@angular/fire/firestore';
 import {
   collection,
   deleteDoc,
@@ -9,26 +9,29 @@ import {
   Unsubscribe,
   where,
 } from 'firebase/firestore';
-import {ToDo} from "../interfaces/to-do";
-import {AuthService} from "./auth.service";
-import {Router} from "@angular/router";
+import { ToDo } from '../interfaces/to-do';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToDoService {
-
-
   todo!: ToDo | undefined;
-  todos: ToDo[] | [] = [];
 
-  constructor(public firestore: Firestore, private auth: AuthService, private router: Router) {
-  }
+  todos: ToDo[] | [] = [];
+  todosTemp: ToDo[] | [] = [];
+
+  constructor(
+    public firestore: Firestore,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   async getATodo(id: string): Promise<Unsubscribe> {
     const todoRef = doc(this.firestore, 'todos', id);
     return onSnapshot(todoRef, (snapshot: any) => {
-      this.todo = {...snapshot.data(), id: snapshot.id};
+      this.todo = { ...snapshot.data(), id: snapshot.id };
     });
   }
 
@@ -39,15 +42,22 @@ export class ToDoService {
     );
 
     return onSnapshot(filtered_q, (snapshot: any) => {
-        this.todo = snapshot.docs.map((data: { data(): ToDo[]; id: string }) => {
+      this.todo = snapshot.docs.map((data: { data(): ToDo[]; id: string }) => {
+        data.data().forEach((todo) => {
+          console.log(todo);
+        });
+      });
+      return { mesi: 'ronaldo' };
+    });
+  }
 
-          data.data().forEach((todo) => {
-            console.log(todo);
-          })
-        })
-        return {"mesi": "ronaldo"};
-      }
-    );
+  filterTodos(text: string): void {
+    this.todos = this.todosTemp.filter((todo) => {
+      return (
+        todo.title.toLocaleLowerCase().includes(text.toLocaleLowerCase()) ||
+        todo.description.toLocaleLowerCase().includes(text.toLocaleLowerCase())
+      );
+    });
   }
 
   async addTodo(data: ToDo) {
@@ -61,8 +71,7 @@ export class ToDoService {
     data['finished'] = false;
 
     await addDoc(productRef, data)
-      .then(() => {
-      })
+      .then(() => {})
       .catch((err: Error) => {
         console.log(err);
       });
@@ -72,7 +81,7 @@ export class ToDoService {
     let productRef = doc(this.firestore, 'todos', id);
     await deleteDoc(productRef)
       .then(() => {
-        console.log("deleted");
+        console.log('deleted');
       })
       .catch((err) => {
         console.log(err);
@@ -81,15 +90,31 @@ export class ToDoService {
 
   async allTodos(): Promise<Unsubscribe> {
     let todoRef = query(collection(this.firestore, 'todos'));
-    const q = query(todoRef, where("uid", "==", this.auth.user?.uid));
+    const q = query(todoRef, where('uid', '==', this.auth.user?.uid));
 
     return onSnapshot(q, (snapshot: any) => {
-      this.todos = snapshot.docs.map(
-        (data: { data(): ToDo; id: string }) => {
-          return {...data.data(), id: data.id};
-        }
-      );
+      this.todos = snapshot.docs.map((data: { data(): ToDo; id: string }) => {
+        return { ...data.data(), id: data.id };
+      });
+      this.todosTemp = this.todos;
     });
+  }
 
+  async toggleTodoState(id: string): Promise<void> {
+    await this.getATodo(id).then(async () => {
+      console.log(this.todo);
+      if (this.todo) {
+        let todoRef = doc(this.firestore, 'todos', this.todo?.id || '0');
+        let data: { finished: boolean } = { finished: false };
+        data['finished'] = !this.todo?.finished;
+        await updateDoc(todoRef, data)
+          .then(() => {
+            this.router.navigate(['/']);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
   }
 }

@@ -1,33 +1,45 @@
-<div class="dark:bg-stone-900 page dark:text-white">
-  <h3 class="font-medium text-lg">Görevler</h3>
-  <form [formGroup]="todoForm" (submit)="
+<div class="dark:bg-stone-900 page dark:text-white pt-8">
+  <form
+    [formGroup]="todoForm"
+    (submit)="
       description?.errors || title?.errors
         ? null
         : todoservice.addTodo(todoForm.value);
       todoForm.reset()
-    ">
+    "
+  >
     <div class="grid place-items-center">
       <div class="lg:w-1/2 w-4/5">
         <input
           class="dark:bg-stone-900 border-t border-l border-r dark:border-stone-600 hidden outline-none rounded-t-md p-1 pl-2 pr-12 w-full shadow-lg title"
-          placeholder="Başlık" formControlName="title"/>
+          placeholder="Başlık"
+          formControlName="title"
+        />
         <div class="relative">
           <input
             class="dark:bg-stone-900 border dark:border-stone-600 outline-none rounded-t-md rounded-b-md p-1 pl-2 pr-12 w-full desc"
             (focusin)="openTitle()"
             formControlName="description"
-            placeholder="Notunuz..."/>
+            placeholder="Notunuz..."
+          />
           <i
-            class="fa-solid fa-image absolute fa-lg right-2 top-[1px] rounded-full hover:bg-stone-200 dark:hover:bg-stone-500 duration-300 cursor-pointer h-8 w-8 grid place-items-center"></i>
+            class="fa-solid fa-image absolute fa-lg right-2 top-[1px] rounded-full hover:bg-stone-200 dark:hover:bg-stone-500 duration-300 cursor-pointer h-8 w-8 grid place-items-center"
+          ></i>
         </div>
         <div
-          class="flex justify-between border-b border-l border-r close hidden p-1 dark:border-stone-600 rounded-md rounded-t-none">
-          <input type="submit"
-                 value="Not Al"
-                 class="cursor-pointer duration-300 dark:hover:bg-stone-800 rounded-lg hover:bg-stone-100 p-[2px]"
-                 (click)="todoservice.allTodos()"/>
-          <span class="cursor-pointer duration-300 dark:hover:bg-stone-800 rounded-lg hover:bg-stone-100 p-[2px]"
-                (click)="closeTitle()">Kapat</span>
+          class="flex justify-between border-b border-l border-r close hidden p-1 dark:border-stone-600 rounded-md rounded-t-none"
+        >
+          <input
+            type="submit"
+            value="Not Al"
+            class="cursor-pointer duration-300 dark:hover:bg-stone-800 rounded-lg hover:bg-stone-100 p-[2px]"
+            (click)="todoservice.allTodos()"
+          />
+          <span
+            class="cursor-pointer duration-300 dark:hover:bg-stone-800 rounded-lg hover:bg-stone-100 p-[2px]"
+            (click)="closeTitle(); todoForm.reset()"
+            >Kapat</span
+          >
         </div>
         <app-error-messages
           [form]="todoForm"
@@ -46,12 +58,15 @@
           [min]="10"
         ></app-error-messages>
       </div>
-
     </div>
   </form>
   <div class="px-6 lg:px-16">
     <div class="horizontal">
-      <app-to-do [todo]="todo" class="todo" *ngFor="let todo of todoservice.todos"></app-to-do>
+      <app-to-do
+        [todo]="todo"
+        class="todo"
+        *ngFor="let todo of todoservice.todos"
+      ></app-to-do>
     </div>
   </div>
 </div>

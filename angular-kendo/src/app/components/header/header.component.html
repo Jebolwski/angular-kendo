@@ -1,52 +1,75 @@
 <div
-  class="dark:text-white text-black flex items-center justify-between p-2 dark:bg-stone-900 px-4 lg:px-20"
+  class="dark:text-white text-black flex items-center border-b dark:border-stone-600 border-stone-100 justify-between p-2 dark:bg-stone-900 px-4 lg:px-20"
 >
   <div>
-    <img *ngIf="auth.darkMode=='dark'" src="https://icon-library.com/images/writing-icon-png/writing-icon-png-13.jpg"
-         alt="Tasks Icon"
-         class="w-8 h-8 invert">
-    <img *ngIf="auth.darkMode!='dark'" src="https://icon-library.com/images/writing-icon-png/writing-icon-png-13.jpg"
-         alt="Tasks Icon"
-         class="w-8 h-8">
-
+    <img
+      *ngIf="auth.darkMode == 'dark'"
+      src="https://icon-library.com/images/writing-icon-png/writing-icon-png-13.jpg"
+      alt="Tasks Icon"
+      class="w-8 h-8 invert"
+    />
+    <img
+      *ngIf="auth.darkMode != 'dark'"
+      src="https://icon-library.com/images/writing-icon-png/writing-icon-png-13.jpg"
+      alt="Tasks Icon"
+      class="w-8 h-8"
+    />
   </div>
 
-  <div class="flex items-center gap-5">
+  <div class="relative w-2/5">
+    <i
+      class="fa-solid fa-search absolute left-1 top-1 hover:bg-stone-400 dark:hover:bg-stone-500 p-1 duration-300 rounded-full"
+    ></i>
+    <input
+      type="text"
+      class="dark:bg-stone-600 w-full bg-stone-200 text px-8 rounded-lg dark:text-white text-black placeholder-black dark:placeholder-white outline-none p-1"
+      placeholder="Arama yapın"
+      (keyup)="todoservice.filterTodos(getValue($event))"
+    />
+    <i
+      class="fa-solid fa-xmark cursor-pointer absolute right-1 top-[6px] hover:bg-stone-400 dark:hover:bg-stone-500 w-5 h-5 grid place-items-center duration-300 rounded-full"
+      (click)="resetText()"
+    ></i>
+  </div>
 
-    <a routerLink="/todos">
-      Tasks
-    </a>
-    <span>•</span>
-    <a routerLink="/"> Home </a>
-    <span>•</span>
-    <a routerLink="/favorites">
-      Favorites
-    </a>
-    <span>•</span>
+  <div class="flex items-center gap-3">
     <kendo-icon
       name="brightness-contrast"
       size="large"
-      class="cursor-pointer"
+      class="cursor-pointer w-8 h-8 hover:dark:bg-stone-600 hover:bg-stone-300 duration-300 grid place-content-center rounded-full"
       (click)="
-      auth.darkMode == 'light'
-        ? auth.toggleDarkMode('dark')
-        : auth.toggleDarkMode('light')
-    "
+        auth.darkMode == 'light'
+          ? auth.toggleDarkMode('dark')
+          : auth.toggleDarkMode('light')
+      "
     ></kendo-icon>
-  </div>
-
-  <div>
-    <div (click)="auth.signOut()" *ngIf="auth.user"
-         class="bg-black dark:bg-white shadow-md hover:shadow-lg rounded-full duration-300 cursor-pointer dark:text-black text-white p-1 px-2">
-      <span>
-    Çıkış Yap
-    </span>
+    <img
+      *ngIf="auth.user && auth.user.photoURL"
+      [src]="auth.user.photoURL"
+      [alt]="auth.user.displayName || 'Profile Pic'"
+      class="w-8 h-8 rounded-full"
+    />
+    <div
+      *ngIf="auth.user && auth.user.email && !auth.user.photoURL"
+      class="w-8 h-8 dark:bg-stone-600 dark:text-white grid place-items-center bg-stone-300 rounded-full"
+    >
+      {{ auth.user.email | slice : 0 : 2 | uppercase }}
     </div>
-    <button
-      class="flex items-center gap-1 bg-black dark:bg-stone-600 shadow-md hover:shadow-lg rounded-full duration-300 cursor-pointer text-white p-1 px-2"
-      routerLink="/sign-in" *ngIf="!auth.user">
-      Giriş Yap
-    </button>
+    <div>
+      <div
+        (click)="auth.signOut()"
+        *ngIf="auth.user"
+        class="from-stone-200 to-stone-300 dark:text-white dark:from-stone-600 dark:to-stone-500 bg-gradient-to-br shadow-md hover:shadow-lg rounded-full duration-300 cursor-pointer text-white p-1 px-2"
+      >
+        <span> Çıkış Yap </span>
+      </div>
+      <button
+        class="flex items-center gap-1 text-white from-stone-400 to-stone-300 dark:from-stone-600 bg-gradient-to-br dark:to-stone-500 shadow-md hover:shadow-lg rounded-full duration-300 cursor-pointer p-1 px-2"
+        routerLink="/sign-in"
+        *ngIf="!auth.user"
+      >
+        Giriş Yap
+      </button>
+    </div>
   </div>
-
 </div>
