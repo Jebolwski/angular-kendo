@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { addDoc, Firestore, updateDoc } from '@angular/fire/firestore';
+import { addDoc, Firestore, orderBy, updateDoc } from '@angular/fire/firestore';
 import {
   collection,
   deleteDoc,
@@ -20,6 +20,11 @@ export class ToDoService {
   todo!: ToDo | undefined;
 
   todos: ToDo[] | [] = [];
+
+  favorites: ToDo[] | [] = [];
+
+  favoritesTemp: ToDo[] | [] = [];
+
   todosTemp: ToDo[] | [] = [];
 
   constructor(
@@ -58,6 +63,47 @@ export class ToDoService {
         todo.description.toLocaleLowerCase().includes(text.toLocaleLowerCase())
       );
     });
+    this.favorites = this.favoritesTemp.filter((todo) => {
+      return (
+        todo.title.toLocaleLowerCase().includes(text.toLocaleLowerCase()) ||
+        todo.description.toLocaleLowerCase().includes(text.toLocaleLowerCase())
+      );
+    });
+  }
+
+  async addToFavorite(tid: string, state: boolean): Promise<void> {
+    if (this.auth.user?.uid) {
+      let data: { favorite: boolean } = {
+        favorite: state,
+      };
+
+      let todo = doc(this.firestore, 'todos', tid);
+      await updateDoc(todo, data)
+        .then(() => {
+          console.log('success');
+        })
+        .catch((err: Error) => {
+          console.log(err);
+        });
+    }
+  }
+
+  async getFavorites(): Promise<Unsubscribe> {
+    let todoRef = query(collection(this.firestore, 'todos'));
+    const q = query(
+      todoRef,
+      where('uid', '==', this.auth.user?.uid),
+      where('favorite', '==', true)
+    );
+
+    return onSnapshot(q, (snapshot: any) => {
+      this.favorites = snapshot.docs.map(
+        (data: { data(): ToDo; id: string }) => {
+          return { ...data.data(), id: data.id };
+        }
+      );
+      this.favoritesTemp = this.favorites;
+    });
   }
 
   async addTodo(data: ToDo) {
@@ -90,7 +136,11 @@ export class ToDoService {
 
   async allTodos(): Promise<Unsubscribe> {
     let todoRef = query(collection(this.firestore, 'todos'));
-    const q = query(todoRef, where('uid', '==', this.auth.user?.uid));
+    const q = query(
+      todoRef,
+      orderBy('favorite', 'desc'),
+      where('uid', '==', this.auth.user?.uid)
+    );
 
     return onSnapshot(q, (snapshot: any) => {
       this.todos = snapshot.docs.map((data: { data(): ToDo; id: string }) => {
@@ -100,21 +150,20 @@ export class ToDoService {
     });
   }
 
-  async toggleTodoState(id: string): Promise<void> {
-    await this.getATodo(id).then(async () => {
-      console.log(this.todo);
-      if (this.todo) {
-        let todoRef = doc(this.firestore, 'todos', this.todo?.id || '0');
-        let data: { finished: boolean } = { finished: false };
-        data['finished'] = !this.todo?.finished;
-        await updateDoc(todoRef, data)
-          .then(() => {
-            this.router.navigate(['/']);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    });
+  async toggleTodoState(tid: string, state: boolean): Promise<void> {
+    if (this.auth.user?.uid) {
+      let data: { finished: boolean } = {
+        finished: state,
+      };
+
+      let todo = doc(this.firestore, 'todos', tid);
+      await updateDoc(todo, data)
+        .then(() => {
+          console.log('success');
+        })
+        .catch((err: Error) => {
+          console.log(err);
+        });
+    }
   }
 }

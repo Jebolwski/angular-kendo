@@ -1,1 +1,22 @@
-<p>favorites works!</p>
+<div class="dark:bg-stone-900 page dark:text-white pt-8">
+  <div class="flex">
+    <app-sidebar classe="favori"></app-sidebar>
+    <div class="flex-1">
+      <div class="px-6 lg:px-16">
+        <div class="horizontal" *ngIf="todoservice.favorites.length > 0">
+          <app-to-do
+            [todo]="todo"
+            class="todo"
+            *ngFor="let todo of todoservice.favorites"
+          ></app-to-do>
+        </div>
+        <div
+          class="text-center text-lg font-semibold"
+          *ngIf="todoservice.favorites.length == 0"
+        >
+          Hiç favori yapacağın yok. 🤨
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

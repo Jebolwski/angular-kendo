@@ -1,4 +1,4 @@
-<div class="height-div dark:bg-stone-800 p-4 text-black dark:text-white">
+<div class="height-div dark:bg-stone-900 p-4 text-black dark:text-white">
   <div class="shadow-md hover:shadow-lg duration-300 rounded-lg">
     <form
       class="w-full mt-10 rounded-lg p-4"
@@ -22,9 +22,11 @@
                 type="text"
                 formControlName="email"
                 [ngClass]="
-                  email?.errors && email?.touched ? 'border-red-500' : ''
+                  email?.errors && email?.touched
+                    ? 'border-red-500 dark:border-red-500'
+                    : ''
                 "
-                class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-stone-900 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+                class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-stone-900 dark:text-white rounded-md w-full p-1 outline-none border dark:border-stone-700"
               />
               <span
                 class="k-icon k-i-check text-green-500 text-lg"
@@ -51,9 +53,11 @@
               <input
                 type="password"
                 [ngClass]="
-                  password?.errors && password?.touched ? 'border-red-500' : ''
+                  password?.errors && password?.touched
+                    ? 'border-red-500 dark:border-red-500'
+                    : ''
                 "
-                class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-stone-900 rounded-md w-full p-1 outline-none border dark:border-stone-700"
+                class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-stone-700 dark:to-stone-800 text-stone-900 dark:text-white rounded-md w-full p-1 outline-none border dark:border-stone-700"
                 formControlName="password"
               />
               <span

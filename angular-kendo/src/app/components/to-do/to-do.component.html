@@ -1,8 +1,19 @@
 <div
   class="vertical-div relative cursor-pointer bg-stone-100 dark:bg-stone-800 dark:text-white p-3 rounded-lg shadow-lg"
 >
+  <div class="absolute -right-1 -top-1">
+    <i
+      *ngIf="todo.favorite"
+      class="fa-solid fa-star text-yellow-300"
+      (click)="todoservice.addToFavorite(todo.id, false)"
+    ></i>
+  </div>
   <div class="absolute pin -right-1 -top-1">
-    <i class="fa-regular fa-star"></i>
+    <i
+      *ngIf="!todo.favorite"
+      class="fa-regular fa-star"
+      (click)="todoservice.addToFavorite(todo.id, true)"
+    ></i>
   </div>
   <div *ngIf="todo.title">{{ todo.title }}</div>
   <p *ngIf="todo.description.length > 100">
@@ -24,14 +35,14 @@
     <div
       class="bg-green-400 text-white text-center p-[2px] px-3 text-sm rounded-full w-20 state"
       *ngIf="todo.finished == true"
-      (click)="todoservice.toggleTodoState(todo.id)"
+      (click)="todoservice.toggleTodoState(todo.id, false)"
     >
       Bitirildi
     </div>
     <div
       class="bg-orange-500 text-white p-[2px] text-center px-3 text-sm rounded-full w-20 state"
       *ngIf="todo.finished == false"
-      (click)="todoservice.toggleTodoState(todo.id)"
+      (click)="todoservice.toggleTodoState(todo.id, true)"
     >
       Yapılıyor
     </div>

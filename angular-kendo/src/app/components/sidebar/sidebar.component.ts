@@ -1,17 +1,11 @@
-import { Component } from '@angular/core';
-
+import { Component, Input, OnInit } from '@angular/core';
+import { doc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent {
-  activate(mesi: string) {
-    document.querySelector('.favori')?.classList.remove('active');
-    document.querySelector('.gorevler')?.classList.remove('active');
-    let div = document.querySelector(mesi);
-    if (div != null) {
-      div.classList.add('active');
-    }
-  }
+  @Input() classe!: string;
 }

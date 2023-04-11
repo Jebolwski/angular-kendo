@@ -1,18 +1,32 @@
 <div
   class="dark:text-white text-black flex items-center border-b dark:border-stone-600 border-stone-100 justify-between p-2 dark:bg-stone-900 px-4 lg:px-20"
 >
-  <div>
+  <div *ngIf="auth.user" routerLink="/home">
     <img
       *ngIf="auth.darkMode == 'dark'"
       src="https://icon-library.com/images/writing-icon-png/writing-icon-png-13.jpg"
       alt="Tasks Icon"
-      class="w-8 h-8 invert"
+      class="w-8 h-8 cursor-pointer invert"
     />
     <img
       *ngIf="auth.darkMode != 'dark'"
       src="https://icon-library.com/images/writing-icon-png/writing-icon-png-13.jpg"
       alt="Tasks Icon"
-      class="w-8 h-8"
+      class="w-8 h-8 cursor-pointer"
+    />
+  </div>
+  <div *ngIf="!auth.user" routerLink="/">
+    <img
+      *ngIf="auth.darkMode == 'dark'"
+      src="https://icon-library.com/images/writing-icon-png/writing-icon-png-13.jpg"
+      alt="Tasks Icon"
+      class="w-8 h-8 cursor-pointer invert"
+    />
+    <img
+      *ngIf="auth.darkMode != 'dark'"
+      src="https://icon-library.com/images/writing-icon-png/writing-icon-png-13.jpg"
+      alt="Tasks Icon"
+      class="w-8 h-8 cursor-pointer"
     />
   </div>
 
