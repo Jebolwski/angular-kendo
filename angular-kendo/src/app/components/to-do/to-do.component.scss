@@ -1,8 +1,7 @@
-.vertical-div {
-  max-width: 300px;
-}
-
-.dots, .image, .state, .pin {
+.dots,
+.image,
+.state,
+.pin {
   opacity: 0;
   transition: 0.5s;
 }
@@ -13,7 +12,10 @@
 }
 
 .vertical-div:hover {
-  .dots, .image, .state, .pin {
+  .dots,
+  .image,
+  .state,
+  .pin {
     opacity: 1;
   }
 
@@ -22,4 +24,20 @@
   }
 
   transition: 0.5s;
+}
+
+.sett {
+  margin-left: 50%;
+  transform: translateX(-50%);
+  scale: 0;
+  transition: 0.2s;
+}
+
+.sett:hover {
+  scale: 1;
+}
+
+.dots:hover + .sett {
+  scale: 1;
+  transition: 0.2s;
 }

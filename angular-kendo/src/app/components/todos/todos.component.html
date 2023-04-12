@@ -46,32 +46,40 @@
                 >Kapat</span
               >
             </div>
-            <app-error-messages
-              [form]="todoForm"
-              name="title"
-              name2="Başlık"
-              [required]="false"
-              [max]="30"
-              [min]="3"
-            ></app-error-messages>
-            <app-error-messages
-              [form]="todoForm"
-              name="description"
-              name2="Açıklama"
-              [required]="true"
-              [max]="140"
-              [min]="10"
-            ></app-error-messages>
+            <div class="flex items-center flex-wrap">
+              <app-error-messages
+                [form]="todoForm"
+                name="title"
+                name2="Başlık"
+                [required]="false"
+                [max]="30"
+                [min]="3"
+              ></app-error-messages>
+              <app-error-messages
+                [form]="todoForm"
+                name="description"
+                name2="Açıklama"
+                [required]="true"
+                [max]="140"
+                [min]="10"
+              ></app-error-messages>
+            </div>
           </div>
         </div>
       </form>
       <div class="px-6 lg:px-16">
-        <div class="horizontal">
+        <div class="todo-list horizontal" *ngIf="todoservice.todos.length > 0">
           <app-to-do
             [todo]="todo"
             class="todo"
             *ngFor="let todo of todoservice.todos"
           ></app-to-do>
+        </div>
+        <div
+          class="text-center text-lg font-semibold"
+          *ngIf="todoservice.todos.length == 0"
+        >
+          Hiç favori yapacağın yok. 🤨
         </div>
       </div>
     </div>

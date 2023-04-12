@@ -8,18 +8,25 @@ import { NotLoggedInService } from './services/not-logged-in.service';
 import { TodosComponent } from './components/todos/todos.component';
 import { LoggedInService } from './services/logged-in.service';
 import { FavoritesComponent } from './components/favorites/favorites.component';
+import { FinishedComponent } from './components/finished/finished.component';
 
 const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    title: 'Home',
+    title: 'Anasayfa',
     canActivate: [NotLoggedInService],
   },
   {
     path: '',
     component: TodosComponent,
-    title: 'Todos',
+    title: 'Görevlerim',
+    canActivate: [LoggedInService],
+  },
+  {
+    path: 'finished',
+    component: FinishedComponent,
+    title: 'Bitenler',
     canActivate: [LoggedInService],
   },
   {

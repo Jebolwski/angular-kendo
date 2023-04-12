@@ -15,4 +15,12 @@
     <i class="fa-regular fa-star w-7"></i>
     <span class="lg:block hidden">Favorilerin</span>
   </div>
+  <div
+    routerLink="/finished"
+    class="flex lg:w-44 items-center favori mt-8 text-lg dark:hover:bg-stone-800 hover:bg-stone-200 duration-200 cursor-pointer p-2 rounded-r-full"
+    [ngClass]="classe == 'finished' ? 'active' : ''"
+  >
+    <i class="fa-solid fa-flag-checkered w-7"></i>
+    <span class="lg:block hidden">Bitenler</span>
+  </div>
 </div>

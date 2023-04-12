@@ -8,6 +8,6 @@ import { ToDoService } from 'src/app/services/to-do.service';
 })
 export class FavoritesComponent {
   constructor(public todoservice: ToDoService) {
-    todoservice.getFavorites();
+    todoservice.allFavorites();
   }
 }

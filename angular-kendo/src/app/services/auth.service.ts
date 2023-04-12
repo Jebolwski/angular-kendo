@@ -7,6 +7,7 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
 } from 'firebase/auth';
+import { ToDoService } from './to-do.service';
 
 @Injectable({
   providedIn: 'root',
@@ -77,7 +78,7 @@ export class AuthService {
         localStorage.removeItem('user');
         localStorage.removeItem('authTokens');
         this.user = undefined;
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       })
       .catch((err) => {
         console.log(err);

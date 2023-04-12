@@ -46,8 +46,16 @@
     >
       Yapılıyor
     </div>
-    <i
-      class="fa-solid fa-ellipsis dots rotate-90 hover:bg-stone-200 dark:hover:bg-stone-500 duration-300 w-6 h-6 grid place-items-center rounded-full"
-    ></i>
+    <div class="relative">
+      <i
+        class="fa-solid fa-ellipsis dots rotate-90 hover:bg-stone-200 dark:hover:bg-stone-500 duration-300 w-6 h-6 grid place-items-center rounded-full"
+      ></i>
+      <div
+        (click)="todoservice.openDeleteModal(todo)"
+        class="absolute dots border dark:border-stone-500 border-stone-300 sett dark:bg-stone-700 bg-stone-200 p-1 px-2 text-xs rounded-lg bottom-[1.5rem]"
+      >
+        Kaldır
+      </div>
+    </div>
   </div>
 </div>

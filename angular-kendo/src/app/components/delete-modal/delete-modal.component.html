@@ -1,0 +1,31 @@
+<div
+  class="w-screen h-screen fixed dark:bg-stone-700/40 bg-stone-200/40 top-0 left-0 z-40 flex justify-center items-center"
+>
+  <div
+    class="lg:w-2/5 w-4/5 dark:bg-stone-800 bg-stone-100 p-3 dark:text-white rounded-md shadow-md hover:shadow-lg duration-300"
+  >
+    <div class="text-center text-lg mb-3">
+      <span
+        class="dark:text-orange-200 text-orange-500 font-semibold inline-block"
+        >'{{ todo?.title }}'
+      </span>
+      başlıklı görevi silmek istediğinize emin misiniz?
+    </div>
+    <div class="flex items-center justify-between px-4">
+      <button
+        class="dark:from-green-500 dark:to-green-600 from-green-400 to-green-500 bg-gradient-to-tr text-white border-none"
+        kendoButton
+        (click)="todoservice.closeDeleteModal()"
+      >
+        Geri Dön
+      </button>
+      <button
+        kendoButton
+        class="dark:from-red-500 dark:to-red-600 from-red-400 to-red-500 bg-gradient-to-tr text-white border-none"
+        (click)="todoservice.deleteTodos(todo?.id!)"
+      >
+        Sil
+      </button>
+    </div>
+  </div>
+</div>

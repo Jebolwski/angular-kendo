@@ -3,5 +3,9 @@
   [class.dark]="auth.darkMode == 'dark'"
 >
   <app-header></app-header>
-  <router-outlet></router-outlet>
+  <app-delete-modal
+    [todo]="todoservice.deleteTodo"
+    class="todo-modal hidden absolute w-full"
+  ></app-delete-modal>
+  <router-outlet (activate)="isTodoPage()"></router-outlet>
 </body>

@@ -1,5 +1,5 @@
 <div
-  class="dark:text-white text-black flex items-center border-b dark:border-stone-600 border-stone-100 justify-between p-2 dark:bg-stone-900 px-4 lg:px-20"
+  class="dark:text-white text-black flex items-center border-b dark:border-stone-600 border-stone-100 justify-between p-2 dark:bg-stone-900 px-2 lg:px-20"
 >
   <div *ngIf="auth.user" routerLink="/home">
     <img
@@ -29,7 +29,6 @@
       class="w-8 h-8 cursor-pointer"
     />
   </div>
-
   <div class="relative w-2/5">
     <i
       class="fa-solid fa-search absolute left-1 top-1 hover:bg-stone-400 dark:hover:bg-stone-500 p-1 duration-300 rounded-full"
@@ -46,17 +45,22 @@
     ></i>
   </div>
 
-  <div class="flex items-center gap-3">
-    <kendo-icon
-      name="brightness-contrast"
-      size="large"
-      class="cursor-pointer w-8 h-8 hover:dark:bg-stone-600 hover:bg-stone-300 duration-300 grid place-content-center rounded-full"
+  <div class="flex items-center lg:gap-3 gap-2">
+    <i
+      (click)="toggleDisplayClass()"
+      *ngIf="isTodoPage()"
+      class="fa-solid fa-rectangle-list cursor-pointer hover:bg-stone-300 rounded-full hover:dark:bg-stone-500 lg:w-8 lg:h-8 w-6 h-6 lg:fa-lg fa-sm duration-200 grid place-items-center"
+    ></i>
+
+    <i
+      class="fa-solid fa-sun cursor-pointer hover:bg-stone-300 rounded-full hover:dark:bg-stone-500 lg:w-8 lg:h-8 w-6 h-6 lg:fa-lg fa-sm duration-200 grid place-items-center"
       (click)="
         auth.darkMode == 'light'
           ? auth.toggleDarkMode('dark')
           : auth.toggleDarkMode('light')
       "
-    ></kendo-icon>
+    ></i>
+
     <img
       *ngIf="auth.user && auth.user.photoURL"
       [src]="auth.user.photoURL"
@@ -73,16 +77,18 @@
       <div
         (click)="auth.signOut()"
         *ngIf="auth.user"
-        class="from-stone-200 to-stone-300 dark:text-white dark:from-stone-600 dark:to-stone-500 bg-gradient-to-br shadow-md hover:shadow-lg rounded-full duration-300 cursor-pointer text-white p-1 px-2"
+        class="from-stone-200 flex items-center justify-center md:h-auto h-8 w-8 md:w-auto gap-1 to-stone-300 dark:text-white dark:from-stone-600 dark:to-stone-500 bg-gradient-to-br shadow-md hover:shadow-lg rounded-full duration-300 cursor-pointer text-white p-1 px-2"
       >
-        <span> Çıkış Yap </span>
+        <i class="fa-solid fa-right-from-bracket lg:block md:hidden block"></i>
+        <span class="md:block hidden"> Çıkış Yap </span>
       </div>
       <button
-        class="flex items-center gap-1 text-white from-stone-400 to-stone-300 dark:from-stone-600 bg-gradient-to-br dark:to-stone-500 shadow-md hover:shadow-lg rounded-full duration-300 cursor-pointer p-1 px-2"
+        class="flex items-center gap-1 text-white from-stone-400 md:h-auto h-8 w-8 md:w-auto to-stone-300 dark:from-stone-600 bg-gradient-to-br dark:to-stone-500 shadow-md hover:shadow-lg rounded-full duration-300 cursor-pointer p-1 px-2"
         routerLink="/sign-in"
         *ngIf="!auth.user"
       >
-        Giriş Yap
+        <i class="fa-solid fa-right-to-bracket lg:block md:hidden block"></i>
+        <span class="md:block hidden"> Giriş Yap </span>
       </button>
     </div>
   </div>

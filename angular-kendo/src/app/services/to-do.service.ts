@@ -23,36 +23,22 @@ export class ToDoService {
 
   favorites: ToDo[] | [] = [];
 
+  finished: ToDo[] | [] = [];
+
   favoritesTemp: ToDo[] | [] = [];
+
+  finishedTemp: ToDo[] | [] = [];
 
   todosTemp: ToDo[] | [] = [];
 
-  constructor(
-    public firestore: Firestore,
-    private auth: AuthService,
-    private router: Router
-  ) {}
+  deleteTodo!: ToDo | undefined;
+
+  constructor(public firestore: Firestore, private auth: AuthService) {}
 
   async getATodo(id: string): Promise<Unsubscribe> {
     const todoRef = doc(this.firestore, 'todos', id);
     return onSnapshot(todoRef, (snapshot: any) => {
       this.todo = { ...snapshot.data(), id: snapshot.id };
-    });
-  }
-
-  async getFavoriteTodos(): Promise<Unsubscribe> {
-    let filtered_q = query(
-      collection(this.firestore, 'todos'),
-      where('uid', '==', this.auth.user?.uid || '0')
-    );
-
-    return onSnapshot(filtered_q, (snapshot: any) => {
-      this.todo = snapshot.docs.map((data: { data(): ToDo[]; id: string }) => {
-        data.data().forEach((todo) => {
-          console.log(todo);
-        });
-      });
-      return { mesi: 'ronaldo' };
     });
   }
 
@@ -64,6 +50,12 @@ export class ToDoService {
       );
     });
     this.favorites = this.favoritesTemp.filter((todo) => {
+      return (
+        todo.title.toLocaleLowerCase().includes(text.toLocaleLowerCase()) ||
+        todo.description.toLocaleLowerCase().includes(text.toLocaleLowerCase())
+      );
+    });
+    this.finished = this.finishedTemp.filter((todo) => {
       return (
         todo.title.toLocaleLowerCase().includes(text.toLocaleLowerCase()) ||
         todo.description.toLocaleLowerCase().includes(text.toLocaleLowerCase())
@@ -88,7 +80,7 @@ export class ToDoService {
     }
   }
 
-  async getFavorites(): Promise<Unsubscribe> {
+  async allFavorites(): Promise<Unsubscribe> {
     let todoRef = query(collection(this.firestore, 'todos'));
     const q = query(
       todoRef,
@@ -107,7 +99,6 @@ export class ToDoService {
   }
 
   async addTodo(data: ToDo) {
-    console.log(data);
     let productRef = collection(this.firestore, 'todos');
 
     if (this.auth.user?.uid) {
@@ -115,32 +106,21 @@ export class ToDoService {
     }
 
     data['finished'] = false;
+    console.log(data);
 
     await addDoc(productRef, data)
-      .then(() => {})
-      .catch((err: Error) => {
-        console.log(err);
-      });
-  }
-
-  async deleteProduct(id: string) {
-    let productRef = doc(this.firestore, 'todos', id);
-    await deleteDoc(productRef)
-      .then(() => {
-        console.log('deleted');
+      .then((data) => {
+        console.log(data);
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         console.log(err);
       });
   }
 
   async allTodos(): Promise<Unsubscribe> {
     let todoRef = query(collection(this.firestore, 'todos'));
-    const q = query(
-      todoRef,
-      orderBy('favorite', 'desc'),
-      where('uid', '==', this.auth.user?.uid)
-    );
+
+    const q = query(todoRef, where('uid', '==', this.auth.user?.uid));
 
     return onSnapshot(q, (snapshot: any) => {
       this.todos = snapshot.docs.map((data: { data(): ToDo; id: string }) => {
@@ -148,6 +128,48 @@ export class ToDoService {
       });
       this.todosTemp = this.todos;
     });
+  }
+
+  async allFinished(): Promise<Unsubscribe> {
+    let todoRef = query(collection(this.firestore, 'todos'));
+
+    const q = query(
+      todoRef,
+      where('uid', '==', this.auth.user?.uid),
+      where('finished', '==', true)
+    );
+
+    return onSnapshot(q, (snapshot: any) => {
+      this.finished = snapshot.docs.map(
+        (data: { data(): ToDo; id: string }) => {
+          console.log(data.data());
+
+          return { ...data.data(), id: data.id };
+        }
+      );
+      this.finishedTemp = this.finished;
+    });
+  }
+
+  async deleteTodos(id: string): Promise<void> {
+    let todoRef = doc(this.firestore, 'todos', id);
+    await deleteDoc(todoRef)
+      .then(() => {
+        this.closeDeleteModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  openDeleteModal(todo: ToDo) {
+    this.deleteTodo = todo;
+    document.querySelector('.todo-modal')?.classList.remove('hidden');
+  }
+
+  closeDeleteModal() {
+    this.deleteTodo = undefined;
+    document.querySelector('.todo-modal')?.classList.add('hidden');
   }
 
   async toggleTodoState(tid: string, state: boolean): Promise<void> {
