@@ -71,9 +71,7 @@ export class ToDoService {
 
       let todo = doc(this.firestore, 'todos', tid);
       await updateDoc(todo, data)
-        .then(() => {
-          console.log('success');
-        })
+        .then(() => {})
         .catch((err: Error) => {
           console.log(err);
         });
@@ -180,9 +178,7 @@ export class ToDoService {
 
       let todo = doc(this.firestore, 'todos', tid);
       await updateDoc(todo, data)
-        .then(() => {
-          console.log('success');
-        })
+        .then(() => {})
         .catch((err: Error) => {
           console.log(err);
         });

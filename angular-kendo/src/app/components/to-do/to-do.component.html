@@ -15,7 +15,7 @@
       (click)="todoservice.addToFavorite(todo.id, true)"
     ></i>
   </div>
-  <div *ngIf="todo.title">{{ todo.title }}</div>
+  <div class="font-semibold" *ngIf="todo.title">{{ todo.title }}</div>
   <p *ngIf="todo.description.length > 100">
     {{ todo.description | slice : 0 : 100 }}...
   </p>

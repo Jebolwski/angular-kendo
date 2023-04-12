@@ -1,4 +1,9 @@
 .active {
-  background-color: #41331c !important;
+  background: rgb(221, 129, 0);
+  background: linear-gradient(
+    311deg,
+    rgba(95, 87, 245, 1) 0%,
+    rgba(57, 50, 194, 1) 100%
+  );
   color: white;
 }

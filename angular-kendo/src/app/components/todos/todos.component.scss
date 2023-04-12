@@ -1,3 +1,47 @@
 .page {
   min-height: calc(100vh - 48px);
 }
+
+.not-al {
+  padding-left: 5px;
+  padding-right: 25px;
+  position: relative;
+}
+
+.not-al:hover::before {
+  animation: icon 0.4s ease;
+  position: absolute;
+  scale: 1;
+  right: 5px;
+  top: 1px;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f249";
+}
+
+.close-btn {
+  padding-right: 5px;
+  padding-left: 25px;
+  position: relative;
+}
+
+.close-btn:hover::before {
+  animation: icon 0.4s ease;
+  position: absolute;
+  color: rgb(158, 36, 36);
+  scale: 1;
+  left: 5px;
+  top: 2px;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f057";
+}
+
+@keyframes icon {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
