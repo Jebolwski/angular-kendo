@@ -5,4 +5,5 @@ export interface ToDo {
   description: string;
   finished: boolean;
   favorite: boolean;
+  created: number;
 }

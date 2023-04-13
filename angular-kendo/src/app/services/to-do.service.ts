@@ -11,7 +11,7 @@ import {
 } from 'firebase/firestore';
 import { ToDo } from '../interfaces/to-do';
 import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
+import { Notyf } from 'notyf';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +20,8 @@ export class ToDoService {
   todo!: ToDo | undefined;
 
   todos: ToDo[] | [] = [];
+
+  notyf: Notyf = new Notyf({ duration: 1500 });
 
   favorites: ToDo[] | [] = [];
 
@@ -104,21 +106,26 @@ export class ToDoService {
     }
 
     data['finished'] = false;
+    data['created'] = Date.now();
     console.log(data);
 
     await addDoc(productRef, data)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
+        this.notyf.success('Görev başarıyla eklendi. ✨');
       })
-      .catch((err: Error) => {
-        console.log(err);
+      .catch(() => {
+        this.notyf.success('Görev eklenirken bir hata oluştu. 😢');
       });
   }
 
   async allTodos(): Promise<Unsubscribe> {
     let todoRef = query(collection(this.firestore, 'todos'));
 
-    const q = query(todoRef, where('uid', '==', this.auth.user?.uid));
+    const q = query(
+      todoRef,
+      orderBy('created', 'desc'),
+      where('uid', '==', this.auth.user?.uid)
+    );
 
     return onSnapshot(q, (snapshot: any) => {
       this.todos = snapshot.docs.map((data: { data(): ToDo; id: string }) => {
@@ -154,9 +161,11 @@ export class ToDoService {
     await deleteDoc(todoRef)
       .then(() => {
         this.closeDeleteModal();
+        this.notyf.success('Görev başarıyla silindi. 🌝');
       })
       .catch((err) => {
         console.log(err);
+        this.notyf.error('Görev silinirken bir hata oluştu. 😥');
       });
   }
 
